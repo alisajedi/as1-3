@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        entryList = (ListView) findViewById(R.id.entryList);
+        entryList = (ListView) findViewById(R.id.entryList);//set up list
     }
 
     @Override
@@ -56,10 +56,10 @@ public class MainActivity extends Activity {
     }
 
     public void newEntry(View view){
-        saveInFile();
+        saveInFile(); //save data
 
         Intent intent = new Intent(this, NewEntryActivity.class);
-        startActivityForResult(intent, 0);
+        startActivityForResult(intent, 0); //call activity
     }
 
     public void editEntry(View view){
@@ -67,43 +67,51 @@ public class MainActivity extends Activity {
 
         Intent intent = new Intent(this, EditActivity.class);
         EditText indexInput = (EditText) findViewById(R.id.index);
-        String index = indexInput.getText().toString();
+        String index = indexInput.getText().toString();//get entered index
 
+        //Set up alert dialog to handle poorly formatted input
         AlertDialog.Builder adBuilder = new AlertDialog.Builder(this);
         boolean badFormat = false;
         Pattern digits = Pattern.compile("^[0-9]+$");
 
         if (!digits.matcher(index).find()){
+            //user didn't enter integer
             adBuilder.setMessage("You must specify which entry to edit.");
             badFormat=true;
         }
         else if (Integer.parseInt(index)>entries.size()){
+            //input is greater than number of entries
             adBuilder.setMessage("Index too large");
             badFormat=true;
         }
         else if (Integer.parseInt(index)<=0){
+            //input is 0 or negative
             adBuilder.setMessage("Index must be positive");
             badFormat=true;
         }
         if (badFormat){
+            //show alert
             AlertDialog ad = adBuilder.create();
             ad.show();
             return;
         }
 
+        //call activity
         intent.putExtra("entryNum",index);
         startActivityForResult(intent, 0);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode==0 && resultCode==RESULT_OK){
+        if (requestCode==0 && resultCode==RESULT_OK){//only do this if activity not cancelled
+            //get the computed total cost returned by activity
             TextView totCost = (TextView) findViewById(R.id.totalCostValue);
-            totCost.setText(data.getStringExtra("totalCost"));
+            totCost.setText(data.getStringExtra("totalCost"));//display new value
         }
         populateList();
     }
 
     private void populateList(){
+        //displays the entered values on the screen
         loadFromFile();
         adapter = new ArrayAdapter<Entry>(this,
                 R.layout.list_item, entries);
@@ -111,6 +119,7 @@ public class MainActivity extends Activity {
     }
 
     private void saveInFile() {
+        //saves data to file
         try {
             FileOutputStream fos = openFileOutput(FILENAME,
                     0);
@@ -127,6 +136,7 @@ public class MainActivity extends Activity {
     }
 
     private void loadFromFile() {
+        //loads data from file
         try {
             FileInputStream fis = openFileInput(FILENAME);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));

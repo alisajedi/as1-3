@@ -85,14 +85,16 @@ public class Entry {
         String retString = date + " ";
 
         if (station.length()>9){
+            //truncate if too long
             retString += station.substring(0,8)+"… ";
         }
         else{
             retString += station;
         }
-        retString = padSpaces(retString,21);
+        retString = padSpaces(retString,21);//pad to fill up screen space
 
         if (odometer.length()>10){
+            //display this if overflow
             retString += "99999999.9 ";
         }
         else{
@@ -101,6 +103,7 @@ public class Entry {
         retString = padSpaces(retString,32);
 
         if (fuelGrade.length()>10){
+            //truncate if too long
             retString += fuelGrade.substring(0,9)+"… ";
         }
         else{
@@ -109,6 +112,7 @@ public class Entry {
         retString = padSpaces(retString,43);
 
         if (fuelAmount.length()>12){
+            //display this if overflow
             retString += "99999999.999 ";
         }
         else{
@@ -117,6 +121,7 @@ public class Entry {
         retString = padSpaces(retString,56);
 
         if (fuelCost.length()>9){
+            //display this if overflow
             retString += "9999999.9 ";
         }
         else{
@@ -125,30 +130,33 @@ public class Entry {
         retString = padSpaces(retString, 66);
 
         if (totalCost.length()>12){
+            //display this if overflow
             retString += "999999999.99 ";
         }
         else{
             retString += totalCost;
         }
 
+        //prefix string with index number
         if (number<10) {
             retString = String.valueOf(number) + ".  " + retString;
         }
         else{
             retString = String.valueOf(number) + ". " + retString;
         }
-        //return date + " " + station + " " + odometer + " " + fuelGrade + " " + fuelAmount + " " + fuelCost + " " + totalCost;
         return retString;
     }
 
     private String trimLeadingZeros(String string){
-        while (string.substring(0,1)=="0"){
+        //removes leading zeros (except for before decimal)
+        while (string.substring(0,1)=="0" && string.substring(0,2)!="0."){
             string = string.substring(1);
         }
         return string;
     }
 
     private String padSpaces(String string, int length){
+        //will add spaces onto the end of a string until string is of desired length
         if (string.length()>=length){
             return string;
         }
@@ -159,13 +167,18 @@ public class Entry {
     }
 
     private void computeTotalCost(){
+        //computes cost based on unit cost and amount
+        //round to two decimal points
         long forRound;
         forRound = Math.round(Double.parseDouble(this.fuelCost) * (Double.parseDouble(this.fuelAmount)));
         double total = forRound;
+        //we can divide by 100 without first multiplying because the initial value was in cents
+        //and the result should be in dollars
         total = total / 100;
 
         this.totalCost=String.valueOf(total);
 
+        //add a trailing 0 if it only has one decimal digit
         Pattern twoDecimals = Pattern.compile("^[0-9]+\\.[0-9]{2}$");
         if (!twoDecimals.matcher(totalCost).find() && !totalCost.contains("E")){
             totalCost += "0";
