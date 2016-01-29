@@ -4,17 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,10 +21,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
-public class NewEntryActivity extends Activity {
+public class EditActivity extends Activity {
 
     private static final String FILENAME = "file.sav";
+
+    private int index;
 
     private ArrayList<Entry> entries = new ArrayList<Entry>();
 
@@ -40,6 +35,29 @@ public class NewEntryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_entry);
+        String indexString = getIntent().getExtras().getString("entryNum");
+        if (indexString!=null){
+            this.index = Integer.parseInt(indexString) - 1;
+        }
+        else{
+            finish();
+        }
+        loadFromFile();
+        Entry toEdit = entries.get(index);
+
+        EditText dateInput = (EditText) findViewById(R.id.dateInput);
+        EditText stationInput = (EditText) findViewById(R.id.stationInput);
+        EditText odometerInput = (EditText) findViewById(R.id.odometerInput);
+        EditText gradeInput = (EditText) findViewById(R.id.fuelGradeInput);
+        EditText amountInput = (EditText) findViewById(R.id.fuelAmountInput);
+        EditText costInput = (EditText) findViewById(R.id.fuelCostInput);
+
+        dateInput.setText(toEdit.getDate());
+        stationInput.setText(toEdit.getStation());
+        odometerInput.setText(toEdit.getOdometer());
+        gradeInput.setText(toEdit.getFuelGrade());
+        amountInput.setText(toEdit.getFuelAmount());
+        costInput.setText(toEdit.getFuelCost());
     }
 
     public void cancel (View view){
@@ -104,9 +122,9 @@ public class NewEntryActivity extends Activity {
 
         loadFromFile();
 
-        Entry next = new Entry(date, station, odometer, grade, amount, cost, entries.size() + 1);
+        Entry edited = new Entry(date, station, odometer, grade, amount, cost, index);
 
-        entries.add(next);
+        entries.set(index,edited);
 
         double total = 0;
         for (int i=0; i<entries.size(); i++){
