@@ -47,6 +47,28 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         entryList = (ListView) findViewById(R.id.entryList);//set up list
+
+        //compute total cost
+        loadFromFile();
+        double total = 0;
+        for (int i=0; i<entries.size(); i++){
+            total += Double.parseDouble(entries.get(i).getTotalCost());
+        }
+
+        //round to 2 decimal places
+        long forRound;
+        forRound = Math.round(total*100);
+        total = forRound;
+        total = total / 100;
+
+        //ensure total cost is formatted with two decimal digits
+        String totalCost = String.valueOf(total);
+        Pattern twoDecimals = Pattern.compile("^[0-9]+\\.[0-9]{2}$");
+        if (!twoDecimals.matcher(totalCost).find() && !totalCost.contains("E")){
+            totalCost += "0";
+        }
+        TextView totCost = (TextView) findViewById(R.id.totalCostValue);
+        totCost.setText(totalCost);//display new value
     }
 
     @Override
@@ -101,6 +123,7 @@ public class MainActivity extends Activity {
         startActivityForResult(intent, 0);
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode==0 && resultCode==RESULT_OK){//only do this if activity not cancelled
             //get the computed total cost returned by activity

@@ -138,18 +138,18 @@ public class Entry {
         }
 
         //prefix string with index number
-        if (number<10) {
-            retString = String.valueOf(number) + ".  " + retString;
+        if (number+1<10) {
+            retString = String.valueOf(number+1) + ".  " + retString;
         }
         else{
-            retString = String.valueOf(number) + ". " + retString;
+            retString = String.valueOf(number+1) + ". " + retString;
         }
         return retString;
     }
 
     private String trimLeadingZeros(String string){
         //removes leading zeros (except for before decimal)
-        while (string.substring(0,1)=="0" && string.substring(0,2)!="0."){
+        while (string.indexOf("0")==0 && string.indexOf(".")!=1){
             string = string.substring(1);
         }
         return string;
