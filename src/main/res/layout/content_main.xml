@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="8dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.dan.assignment1.MainActivity">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="32dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.example.dan.assignment1.MainActivity"
+        android:id="@+id/relativeLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Date"
+            android:id="@+id/dateTitle"
+            android:paddingLeft="28dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Station"
+            android:id="@+id/stationTitle"
+            android:layout_marginStart="48dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/dateTitle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Odometer"
+            android:id="@+id/odometerTitle"
+            android:layout_marginStart="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/stationTitle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/FuelGrade"
+            android:id="@+id/fGradeTitle"
+            android:layout_marginStart="14dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/odometerTitle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/FuelAmount"
+            android:id="@+id/fAmountTitle"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/fGradeTitle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/FuelUnitCost"
+            android:id="@+id/fUnitCostTitle"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/fAmountTitle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/FuelCost"
+            android:id="@+id/fCostTitle"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/fUnitCostTitle" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/entryList"
+            android:layout_below="@+id/dateTitle"/>
+
+
+    </RelativeLayout>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="@string/NewEntry"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:onClick="newEntry"
+        android:textSize="10dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="@string/EditEntry"
+        android:id="@+id/editbutton"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@id/button"
+        android:layout_marginStart="16dp"
+        android:onClick="editEntry"
+        android:textSize="10dp" />
+
+    <EditText
+        android:layout_width="40dp"
+        android:textSize="10dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/index"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@id/editbutton"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="8dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/zeroCost"
+        android:id="@+id/totalCostValue"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/overallCost"
+        android:id="@+id/totalCostTitle"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/totalCostValue"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"/>
+
+
+</RelativeLayout>
