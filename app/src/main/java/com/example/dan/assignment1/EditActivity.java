@@ -138,7 +138,7 @@ public class EditActivity extends Activity {
         loadFromFile();//load data
 
         //make new entry with updated data
-        Entry edited = new Entry(date, station, odometer, grade, amount, cost, index);
+        Entry edited = new Entry(date, station, odometer, grade, amount, cost, index + 1);
 
         entries.set(index,edited);//replace old entry with new data
 

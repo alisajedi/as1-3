@@ -139,10 +139,10 @@ public class Entry {
 
         //prefix string with index number
         if (number+1<10) {
-            retString = String.valueOf(number+1) + ".  " + retString;
+            retString = String.valueOf(number) + ".  " + retString;
         }
         else{
-            retString = String.valueOf(number+1) + ". " + retString;
+            retString = String.valueOf(number) + ". " + retString;
         }
         return retString;
     }
